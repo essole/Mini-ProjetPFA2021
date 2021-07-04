@@ -1,0 +1,57 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Avatars {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+{% block content %}
+    <div class="content">
+		<div class="page-inner">
+			<div class="page-header">
+				<h4 class="page-title">Data Types </h4>
+				<ul class="breadcrumbs">
+					<li class="nav-home">
+                        	<a href="#">
+							<i class="flaticon-home"></i>
+						</a>
+					</li>
+					<li class="separator">
+						<i class="flaticon-right-arrow"></i>
+					</li>
+					<li class="nav-item">
+						<a href="#">General Info</a>
+					</li>
+					<li class="separator">
+						<i class="flaticon-right-arrow"></i>
+					</li>
+					<li class="nav-item">
+						<a href="#">Data Types</a>
+					</li>
+				</ul>
+			</div>
+            <div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">Data Types</h4>
+
+						</div>
+						<div class="card-body">
+                            <pre class="demo text-white">
+                               {{ var }}
+                            </pre>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+	<!-- Atlantis DEMO methods, don't include it in your project! -->
+	<script src="/static/assets/js/setting-demo2.js"></script>
+
+{% endblock javascripts %}

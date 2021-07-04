@@ -1,0 +1,198 @@
+		<!-- Sidebar -->
+		<div class="sidebar sidebar-style-2" data-background-color="dark2">			
+			<div class="sidebar-wrapper scrollbar scrollbar-inner">
+				<div class="sidebar-content">
+
+				{% if current_user.is_authenticated %}	
+					<div class="user">
+						<div class="avatar-sm float-left mr-2">
+							<img src="/static/assets/img/inpt2.png" alt="..." class="avatar-img rounded-circle">
+						</div>
+						<div class="info">
+							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+								<span>
+									{{ current_user.username }}
+									<span class="user-level">
+										{{ current_user.email }}
+									</span>
+									<span class="caret"></span>
+								</span>
+							</a>
+							<div class="clearfix"></div>
+
+							<div class="collapse in" id="collapseExample">
+								<ul class="nav">
+									<li>
+										<a href="#profile">
+											<span class="link-collapse">My Profile</span>
+										</a>
+									</li>
+									<li>
+										<a href="{{ url_for('base_blueprint.logout') }}">
+											<span class="link-collapse">Logout</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<ul class="nav nav-primary">
+						<li class="nav-item {% if 'index' in segment %} active {% endif %}">
+                        <a  id="dashboard" href="/index.html" class="collapsed" aria-expanded="false">
+								<i class="fas fa-home"></i>
+								<p>Dashboard</p>
+								<span class="caret"></span>
+							</a>
+						</li>
+						<li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+							<h4 class="text-section">Components</h4>
+						</li>
+                        <li class="nav-item ">
+							<a data-toggle="collapse" href="#charts">
+								<i class="far fa-chart-bar"></i>
+								<p>Graphes</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="charts">
+								<ul class="nav nav-collapse">
+									<li>
+                                        <a href="/Bad">
+                                            <span class="sub-item">Bad Trafic graph</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/Timeplot">
+                                            <span class="sub-item">Attack Based on time</span>
+                                        </a>
+                                    </li>
+									<li>
+										<a href="/corplot">
+											<span class="sub-item">Correlation~services</span>
+										</a>
+									</li>
+                                    <li>
+										<a href="/dstplot">
+											<span class="sub-item">Targeted Address</span>
+										</a>
+									</li>
+                                    <li>
+										<a href="/cortime">
+											<span class="sub-item">Cor Time&Attacks</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<li class="nav-item {% if 'ui-' in segment %} active {% endif %}">
+							<a data-toggle="collapse" href="#base">
+								<i class="fas fa-layer-group"></i>
+								<p>Statistics</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="base">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="/genstat">
+											<span class="sub-item">General Data Info</span>
+										</a>
+									</li>
+									<li>
+										<a href="/mainstatbad">
+											<span class="sub-item">Main stats Bad trafic</span>
+										</a>
+									</li>
+									<li>
+										<a href="/specdatainfo">
+											<span class="sub-item">Spec Statistics</span>
+										</a>
+									</li>
+									<li>
+										<a href="/ui-notifications.html">
+											<span class="sub-item">Notifications</span>
+										</a>
+									</li>
+									<li>
+										<a href="/ui-sweetalert.html">
+											<span class="sub-item">Sweet Alert</span>
+										</a>
+									</li>
+									<li>
+										<a href="/icons-fontawesome.html">
+											<span class="sub-item">Font Awesome Icons</span>
+										</a>
+									</li>
+									<li>
+										<a href="/icons-simpleline.html">
+											<span class="sub-item">Simple Line Icons</span>
+										</a>
+									</li>
+									<li>
+										<a href="/icons-flaticons.html">
+											<span class="sub-item">Flaticons</span>
+										</a>
+									</li>
+									<li>
+										<a href="/ui-typography.html">
+											<span class="sub-item">Typography</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<li class="nav-item {% if 'form' in segment %} active {% endif %}">
+							<a data-toggle="collapse" href="#forms">
+								<i class="fas fa-pen-square"></i>
+								<p>Analysis</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="forms">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="/analsbyserv">
+											<span class="sub-item">Service Analysis</span>
+										</a>
+									</li>
+                                    <li>
+										<a href="/analservport">
+											<span class="sub-item">Seek attacks</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<li class="nav-item {% if 'tables' in segment %} active {% endif %}">
+							<a data-toggle="collapse" href="#tables">
+								<i class="fas fa-table"></i>
+								<p>General Info</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="tables">
+								<ul class="nav nav-collapse">
+                                    <li>
+										<a href="/vizdata">
+											<span class="sub-item">Visualize data</span>
+										</a>
+									</li>
+									<li>
+										<a href="/datatype">
+											<span class="sub-item">Data type</span>
+										</a>
+									</li>
+									<li>
+										<a href="/tables-data.html">
+											<span class="sub-item">Datatables</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+				{% endif %}
+                    </ul>
+				</div>
+			</div>
+		</div>
+        <!-- End Sidebar -->
+        
