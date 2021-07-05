@@ -223,6 +223,8 @@ def addrule():
             rule = "\n" + protocol + "|" + service + "|" + port + "|" + addsrc + "|" + autre
         elif protocol != "" and service !="" and port !="" and addsrc !="" and addst != "" and autre =="":
             rule = "\n" + protocol + "|" + service + "|" + port + "|" + addsrc + "|" + addst
+        elif protocol == "" and service == "" and port == "" and addsrc == "" and addst == "" and autre == "":
+            rule="\n"
         else:
             rule = "\n" + protocol + "|" + service + "|" + port + "|" + addsrc + "|" + addst + "|"+ autre
     addrules(rule)

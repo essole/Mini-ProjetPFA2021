@@ -12,10 +12,10 @@ class Input2_form(FlaskForm):
     submit = SubmitField('Send')
 
 class Input3_form(FlaskForm):
-    protocol = IntegerField('protocol', validators=[DataRequired()])
-    service = StringField('service', validators=[DataRequired()])
-    port = IntegerField('port', validators=[DataRequired()])
-    addsrc = StringField('addsrc', validators=[DataRequired()])
-    addst = StringField('addst', validators=[DataRequired()])
-    autre = StringField('autre', validators=[DataRequired()])
+    protocol = StringField('protocol')
+    service = StringField('service')
+    port = StringField('port')
+    addsrc = StringField('addsrc')
+    addst = StringField('addst')
+    autre = StringField('autre')
     submit = SubmitField('Send')
