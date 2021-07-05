@@ -1,0 +1,87 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+			
+	<div class="content">
+		<div class="page-inner">
+			<div class="page-header">
+				<h4 class="page-title">Seek possible attacks </h4>
+				<ul class="breadcrumbs">
+					<li class="nav-home">
+                        	<a href="#">
+							<i class="flaticon-home"></i>
+						</a>
+					</li>
+					<li class="separator">
+						<i class="flaticon-right-arrow"></i>
+					</li>
+					<li class="nav-item">
+						<a href="#">Analysis</a>
+					</li>
+					<li class="separator">
+						<i class="flaticon-right-arrow"></i>
+					</li>
+					<li class="nav-item">
+						<a href="#">Seek possible attacks</a>
+					</li>
+				</ul>
+			</div>
+		<div class="page-inner ">
+			<div class="row ">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<div class="card-head-row">
+								<div class="card-title">Seek for attacks based on Services and payloads sizes</div>
+								<div class="card-tools">
+									<a href="#" class="btn btn-info btn-border btn-round btn-sm mr-2">
+										<span class="btn-label">
+											<i class="fa fa-pencil"></i>
+										</span>
+										Export
+									</a>
+									<a href="#" class="btn btn-info btn-border btn-round btn-sm">
+										<span class="btn-label">
+											<i class="fa fa-print"></i>
+										</span>
+										Print
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="card-body">
+                            <div class="form-group form-floating-label">
+                                    <form action=" " method="post" id="firstform">
+                                        {{ form.hidden_tag() }}
+                                        <p> {{ form.protocol(id="inputFloatingLabel1",class="form-control input-solid col-md-6", placeholder="Put the protocol number for example '6' for TCP") }} </p>
+                                        <p> {{ form.service(id="inputFloatingLabel2",class="form-control input-solid col-md-6", placeholder="Service name") }} </p>
+                                        <p> {{ form.port(id="inputFloatingLabel3",class="form-control input-solid col-md-6", placeholder="Port value") }} </p>
+                                        <p> {{ form.addsrc(id="inputFloatingLabel4",class="form-control input-solid col-md-6", placeholder="Authorized source IP") }} </p>
+                                        <p> {{ form.addst(id="inputFloatingLabel5",class="form-control input-solid col-md-6", placeholder="Authorized destination IP") }} </p>
+                                        <p> {{ form.autre(id="inputFloatingLabel6",class="form-control input-solid col-md-6", placeholder="Add other rule specification seperated by '|'") }} </p>
+                                        <p >{{ form.submit(class="btn btn-primary btn-sm") }}</p>
+                                    </form>
+                                </div>
+					        </div>
+				        </div>
+                    </div>
+			    </div>
+		    </div>
+	    </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+	<!-- Atlantis DEMO methods, don't include it in your project! -->
+	<script src="/static/assets/js/setting-demo.js"></script>
+
+
+{% endblock javascripts %}

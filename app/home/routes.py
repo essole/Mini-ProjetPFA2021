@@ -5,7 +5,8 @@ from flask_login import login_required, current_user
 from app import login_manager
 from jinja2 import TemplateNotFound
 from dataAnalysis import *
-from affichPage import Input_form, Input2_form
+from script import addrules
+from affichPage import Input_form, Input2_form, Input3_form
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import io
 import sys
@@ -198,6 +199,34 @@ def analservport():
             return render_template('Analysis/analservport.html', var2=var2, form2=form2, form=form)
     return render_template('Analysis/analservport.html', form=form, form2=form2)
 
+@blueprint.route('/addrule', methods=['GET','POST'])
+@login_required
+def addrule():
+    form = Input3_form()
+    rule=""
+    if form.validate_on_submit():
+        protocol = form.protocol.data
+        service = form.service.data
+        port = form.port.data
+        addsrc = form.addsrc.data
+        addst = form.addst.data
+        autre = form.autre.data
+        if protocol == "" and service !="" and port !="" and addsrc !="" and addst != "" and autre !="":
+            rule = "\n"+service +"|"+port+"|"+addsrc+"|"+addst+"|"+autre
+        elif protocol != "" and service =="" and port !="" and addsrc !="" and addst != "" and autre !="":
+            rule = "\n" + protocol + "|" + port + "|" + addsrc + "|"+ addst + "|" + autre
+        elif protocol != "" and service !="" and port =="" and addsrc !="" and addst != "" and autre !="":
+            rule = "\n"+protocol +"|"+ service + "|" + addsrc + "|"+ addst + "|" + autre
+        elif protocol != "" and service !="" and port !="" and addsrc =="" and addst != "" and autre !="":
+            rule = "\n" + protocol + "|" + service + "|" + port + "|" + addst + "|" + autre
+        elif protocol != "" and service !="" and port !="" and addsrc !="" and addst == "" and autre !="":
+            rule = "\n" + protocol + "|" + service + "|" + port + "|" + addsrc + "|" + autre
+        elif protocol != "" and service !="" and port !="" and addsrc !="" and addst != "" and autre =="":
+            rule = "\n" + protocol + "|" + service + "|" + port + "|" + addsrc + "|" + addst
+        else:
+            rule = "\n" + protocol + "|" + service + "|" + port + "|" + addsrc + "|" + addst + "|"+ autre
+    addrules(rule)
+    return render_template("stats/addrule.html", form=form)
 
 @blueprint.route('/<template>')
 @login_required
