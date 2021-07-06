@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   labels:
     app: web
-  name: PFA2021
+  name: pfa2021
 spec:
   replicas: 3
   selector:
@@ -19,9 +19,9 @@ spec:
       - name: projectflask
         image:  essole/pfa2021:1.0.0
         ports:
-        - containerPort: 5000
-      - name: Ngenix
-        image:  essole/linkextractor-web:v1-php
+        - containerPort: 5005
+      - name: nginx
+        image:  nginx:latest
         ports:
         - containerPort: 85
         
@@ -31,16 +31,16 @@ kind: Service
 metadata:
   labels:
     app: web
-  name: devopsproject
+  name: pfa2021
 spec:
   selector:
     app: web
   ports:
   - name: apiport
     protocol: TCP
-    port: 5000
-    targetPort: 5000
+    port: 5005
+    targetPort: 5005
   - name: webport
     protocol: TCP
-    port: 8081
-    targetPort: 80
+    port: 85
+    targetPort: 85
