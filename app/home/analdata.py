@@ -70,6 +70,6 @@ def pcap2csv(in_pcap, out_csv):
 
     print('{} packets read, {} packets not written to CSV'.format(frame_num, ignored_packets))
 
-pcap ="fich.pcap"
+pcap ="../../fich.pcap"
 csv = "fic1.csv"
 pcap2csv(pcap, csv)
