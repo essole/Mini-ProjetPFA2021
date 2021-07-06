@@ -1,17 +1,16 @@
 # -*- encoding: utf-8 -*-
 from app.home import blueprint
-from flask import render_template, redirect, url_for, request, Response
-from flask_login import login_required, current_user
-from app import login_manager
+from flask import render_template, request, Response
+from flask_login import login_required
 from jinja2 import TemplateNotFound
-from dataAnalysis import *
-from script import addrules
-from affichPage import Input_form, Input2_form, Input3_form
+from app.home.dataAnalysis import *
+from app.home.script import addrules
+from app.home.affichPage import Input_form, Input2_form, Input3_form
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import io
 import sys
 
-df = pd.read_csv('fic1.csv', header=None, sep="\t", names=['version', 'ihl', 'tos', 'len', 'id', 'flags', 'frag', 'ttl', 'proto', 'chksum', 'src', 'dst', 'options','service', 'time', 'sport', 'dport', 'seq', 'ack', 'dataofs', 'reserved', 'tcp_flags', 'window', 'tcp_chksum', 'urgptr', 'tcp_options', 'payload', 'payload_raw', 'payload_hex'])
+df = pd.read_csv('fic1.csv', header=None, sep="\t", names=['version', 'ihl', 'tos', 'len', 'id', 'flags', 'frag', 'ttl', 'proto', 'chksum', 'src', 'dst', 'options', 'service', 'time', 'sport', 'dport', 'seq', 'ack', 'dataofs', 'reserved', 'tcp_flags', 'window', 'tcp_chksum', 'urgptr', 'tcp_options', 'payload', 'payload_raw', 'payload_hex'])
 
 #often the time type isn't accurate so this line convert the time type into datatime
 df['time'] = [datetime.fromtimestamp(float(date)) for date in df['time'].values]
