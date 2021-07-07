@@ -167,17 +167,6 @@ class datainfo:
         f.tight_layout()
         return(f)
 
-obj = datainfo(df)
-#var =df.groupby(by='proto')
-obj.corplotbytime()
-#print(obj.servSummary('DNS'))
-#print(df['service'])
-#print(df.time.head(10))
-#plt.show()
-
-#print(df.info())
-#from IPython.display import display
-#display(df)
 
 
 
