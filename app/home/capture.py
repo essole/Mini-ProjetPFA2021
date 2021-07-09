@@ -1,13 +1,14 @@
-
+import os
 from scapy.all import *
 import datetime
+from apscheduler.schedulers.background import BackgroundScheduler
 
+sched = BackgroundScheduler()
+@sched.scheduled_job('interval', id='my_job_id', hours=2)
 def sniffpac():
     date = datetime.datetime.now()
-    cap = sniff(timeout=15)
+    file = "../../" + str(date.strftime("%B")) + "/" + str(date.year) + "-" + str(date.month) + "-" + str(date.day) + ".cap"
+    os.system("cp fictest.pcap %s | 2>/dev/null"%file)
+    cap = sniff(timeout=60)
     wrpcap("fictest.pcap", cap)
 
-#df= pd.read_csv('fic1.csv',sep="|", header=None,names=['num','time','high_proto','proto','desc','src_ip','sport','dst_ip','dport','length','payload'])
-
-
-sniffpac()

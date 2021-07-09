@@ -13,4 +13,5 @@ pandas
 matplotlib
 seaborn
 wtforms
+apscheduler
 tabulate

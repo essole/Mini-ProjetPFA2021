@@ -1,16 +1,13 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Analysis {% endblock %}
-
-<!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block title %} General Info {% endblock %}
 
 {% block content %}
-			
+
 	<div class="content">
 		<div class="page-inner">
 			<div class="page-header">
-				<h4 class="page-title">Services Analysis </h4>
+				<h4 class="page-title">Global statistics</h4>
 				<ul class="breadcrumbs">
 					<li class="nav-home">
                         	<a href="#">
@@ -21,23 +18,51 @@
 						<i class="flaticon-right-arrow"></i>
 					</li>
 					<li class="nav-item">
-						<a href="#">Analysis</a>
+						<a href="#">General Info</a>
 					</li>
 					<li class="separator">
 						<i class="flaticon-right-arrow"></i>
 					</li>
 					<li class="nav-item">
-						<a href="#">Services Analysis</a>
+						<a href="#">Global statistics by IP address</a>
 					</li>
 				</ul>
 			</div>
 		<div class="page-inner ">
+            <div class="row ">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<div class="card-head-row">
+								<div class="card-title">Address of the Trafic</div>
+								<div class="card-tools">
+									<a href="#" class="btn btn-info btn-border btn-round btn-sm mr-2">
+										<span class="btn-label">
+											<i class="fa fa-pencil"></i>
+										</span>
+										Export
+									</a>
+									<a href="#" class="btn btn-info btn-border btn-round btn-sm">
+										<span class="btn-label">
+											<i class="fa fa-print"></i>
+										</span>
+										Print
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="card-body">
+							<pre class="demo text-white"> {{ var }}</pre>
+						</div>
+					</div>
+				</div>
+            </div>
 			<div class="row ">
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-header">
 							<div class="card-head-row">
-								<div class="card-title">Data summary based on services</div>
+								<div class="card-title">Global statistics per service</div>
 								<div class="card-tools">
 									<a href="#" class="btn btn-info btn-border btn-round btn-sm mr-2">
 										<span class="btn-label">
@@ -56,15 +81,19 @@
 						</div>
 						<div class="card-body">
                             <div class="form-group form-floating-label">
-                                    <form action=" " method="post" id="firstform">
+                                    <form action="/plotbyservglob.png" method="post" id="firstform">
                                         {{ form.hidden_tag() }}
                                     <p> {{ form.value(id="inputFloatingLabel1",class="form-control input-solid col-md-6", placeholder="Number of line to print") }} </p>
 
                                     <p >{{ form.submit(class="btn btn-primary btn-sm") }}</p>
                                     </form>
                                 </div>
-							<pre class="demo text-white"> {{ var1 }}</pre>
-						</div>
+                            <div>
+                            <p class="demo">
+                                <img class="avatar-img" style="height:90%;width:80%; margin-left: 100px" src="/plotbyservglob.png" alt="" />
+                            </p>
+                            </div>
+                        </div>
 					</div>
 				</div>
             </div>
@@ -73,7 +102,7 @@
 					<div class="card">
 						<div class="card-header">
 							<div class="card-head-row">
-								<div class="card-title">Visualize Data by service</div>
+								<div class="card-title">Global statistics per Protocol</div>
 								<div class="card-tools">
 									<a href="#" class="btn btn-info btn-border btn-round btn-sm mr-2">
 										<span class="btn-label">
@@ -92,15 +121,16 @@
 						</div>
 						<div class="card-body">
                             <div class="form-group form-floating-label">
-                                    <form action=" " method="post" id="secform">
+                                    <form action="/plotbyaddglob.png" method="post" id="secform">
                                         {{ form2.hidden_tag() }}
-                                    <p> {{ form2.name(id="inputFloatingLabel2",class="form-control input-solid col-md-6", placeholder="service name") }} </p>
-                                    <p> {{ form2.valeur(id="inputFloatingLabel3",class="form-control input-solid col-md-6", placeholder="Number of line to print") }} </p>
+                                    <p> {{ form2.value(id="inputFloatingLabel3",class="form-control input-solid col-md-6", placeholder="IP address") }} </p>
 
                                     <p >{{ form2.submit(class="btn btn-primary btn-sm") }}</p>
                                     </form>
                                 </div>
-							<pre class="demo text-white"> {{ var2 }}</pre>
+							<p class="demo">
+                                <img class="avatar-img" style="height:90%;width:80%; margin-left: 100px" src="/plotbyaddglob.png" alt="" />
+                            </p>
 						</div>
 					</div>
 				</div>
@@ -116,6 +146,4 @@
 
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
 	<script src="/static/assets/js/setting-demo.js"></script>
-
-
 {% endblock javascripts %}

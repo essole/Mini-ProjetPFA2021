@@ -25,7 +25,6 @@ class datainfo:
 
     def showData(self):
         return (tabulate(self.df.head(self.nline), headers = 'keys', tablefmt = 'pretty'))
-       #return(self.df.head(self.nline))
 
     def describeData(self):
         df_red = self.df.drop(['version', 'ihl', 'tos','len', 'id', 'flags', 'frag', 'ttl','chksum', 'options'], axis=1)
@@ -97,13 +96,11 @@ class datainfo:
     def servSummary(self, servname):
         servsumm = self.df[self.df['service'].str.contains(servname)].describe()
         return(tabulate(servsumm, headers = 'keys', tablefmt = 'pretty'))
-        #return(servsumm)
 
 #visualize data by service
     def vizserv(self, servname):
         servsumm = self.df[self.df['service'].str.contains(servname)].head(self.nline)
         return(tabulate(servsumm, headers = 'keys', tablefmt = 'pretty'))
-        #return(servsumm)
 
 # detect a possible attack based on the service being by used the attacker and the size of bytes he/she is sending and recv
     def servAttack(self, serv):
@@ -114,7 +111,6 @@ class datainfo:
         servsumm = servdst['resp_payload']
         servsrc['resp_payload'] = servsumm
         return(tabulate(servsrc.describe(), headers = 'keys', tablefmt = 'pretty'))
-        #return(servsrc.describe())
 
 #detect possible attack based on legimate service, using other port than the normalized one
     def portAttack(self, serv, port):
@@ -171,6 +167,17 @@ class datainfo:
         f.tight_layout()
         return(f)
 
+obj = datainfo(df)
+#var =df.groupby(by='proto')
+obj.corplotbytime()
+#print(obj.servSummary('DNS'))
+#print(df['service'])
+#print(df.time.head(10))
+#plt.show()
+
+#print(df.info())
+#from IPython.display import display
+#display(df)
 
 
 

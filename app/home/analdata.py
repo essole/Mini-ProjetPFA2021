@@ -49,12 +49,14 @@ def pcap2csv(in_pcap, out_csv):
                         tcp_field_values.append(packet[layer_type].fields[field])
                 except:
                     tcp_field_values.append(None)
-
-            ip_packet = pcap[count][IP]
-            segment = ip_packet.payload
-            data = segment.payload
-            data_sum = data.summary().split(' ')
-            count += 1
+            try:
+                ip_packet = pcap[count][IP]
+                segment = ip_packet.payload
+                data = segment.payload
+                data_sum = data.summary().split(' ')
+                count += 1
+            except IndexError:
+                pass
 
             # Append payload
             payload = (len(packet[layer_type].payload))
@@ -69,7 +71,3 @@ def pcap2csv(in_pcap, out_csv):
                 break
 
     print('{} packets read, {} packets not written to CSV'.format(frame_num, ignored_packets))
-
-pcap ="../../fich.pcap"
-csv = "fic1.csv"
-pcap2csv(pcap, csv)

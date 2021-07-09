@@ -4,24 +4,92 @@ from flask import render_template, request, Response
 from flask_login import login_required
 from jinja2 import TemplateNotFound
 from app.home.dataAnalysis import *
-from app.home.script import addrules
+from app.home.script import addrules, classifytrafic
+from app.home.Global import Sta_Globale, Sta_Globaleserv
+from app.home.ByAddress import Stat_Address, plotbyadd, plotbyserv
 from app.home.affichPage import Input_form, Input2_form, Input3_form
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from app.home.capture import sniffpac
+from app.home.analdata import pcap2csv
 import io
 import sys
 
-df = pd.read_csv('app/home/fic1.csv', header=None, sep="\t", names=['version', 'ihl', 'tos', 'len', 'id', 'flags', 'frag', 'ttl', 'proto', 'chksum', 'src', 'dst', 'options', 'service', 'time', 'sport', 'dport', 'seq', 'ack', 'dataofs', 'reserved', 'tcp_flags', 'window', 'tcp_chksum', 'urgptr', 'tcp_options', 'payload', 'payload_raw', 'payload_hex'])
+#sniffing process
+sniffpac()
+
+pcap ="../../fich.pcap"
+csv = "app/home/fic1.csv"
+pcap2csv(pcap, csv)
+
+#trafic classification
+classifytrafic(csv)
+
+#Global dataframe without any training
+tot = pd.read_csv('app/home/fic1.csv', header=None, sep="\t", names=['version', 'ihl', 'tos', 'len', 'id', 'flags', 'frag', 'ttl', 'proto', 'chksum', 'src', 'dst', 'options', 'service', 'time', 'sport', 'dport', 'seq', 'ack', 'dataofs', 'reserved', 'tcp_flags', 'window', 'tcp_chksum', 'urgptr', 'tcp_options', 'payload', 'payload_raw', 'payload_hex'])
+
+# Bad trafic dataframe
+df = pd.read_csv('bad_trafic.csv', header=None, sep="\t", names=['version', 'ihl', 'tos', 'len', 'id', 'flags', 'frag', 'ttl', 'proto', 'chksum', 'src', 'dst', 'options', 'service', 'time', 'sport', 'dport', 'seq', 'ack', 'dataofs', 'reserved', 'tcp_flags', 'window', 'tcp_chksum', 'urgptr', 'tcp_options', 'payload', 'payload_raw', 'payload_hex'])
+df = df.dropna()
+
+#authorized trafic dataframe
+dfauth = pd.read_csv('auth_trafic.csv', header=None, sep="\t", names=['version', 'ihl', 'tos', 'len', 'id', 'flags', 'frag', 'ttl', 'proto', 'chksum', 'src', 'dst', 'options', 'service', 'time', 'sport', 'dport', 'seq', 'ack', 'dataofs', 'reserved', 'tcp_flags', 'window', 'tcp_chksum', 'urgptr', 'tcp_options', 'payload', 'payload_raw', 'payload_hex'])
 
 #often the time type isn't accurate so this line convert the time type into datatime
 df['time'] = [datetime.fromtimestamp(float(date)) for date in df['time'].values]
 df['time'] = pd.to_datetime(df.time, format='DD/MM/YY')
 
-
 @blueprint.route('/index')
 @login_required
 def index():
+    obj = datainfo(tot)
+    var = obj.describeData()
+    return render_template('index.html',segment='index', var=var)
 
-    return render_template('index.html', segment='index')
+@blueprint.route('/plotglobserv.png')
+@login_required
+def plotglobserv_png():
+    fig = Sta_Globaleserv(dfauth)
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
+
+@blueprint.route('/plotglobpro.png')
+@login_required
+def plotglobproto_png():
+    fig = Sta_Globale(dfauth)
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
+
+@blueprint.route('/plotbyaddglob.png', methods=['POST'])
+@login_required
+def plotbyaddglob():
+    form = Input_form()
+    output = io.BytesIO()
+    if form.validate_on_submit():
+        add = form.value.data
+        fig = plotbyadd(dfauth, add)
+        FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
+
+@blueprint.route('/plotbyservglob.png', methods=['POST'])
+@login_required
+def plotbyservglob():
+    form = Input_form()
+    output = io.BytesIO()
+    if form.validate_on_submit():
+        add = form.value.data
+        fig = plotbyserv(dfauth,add)
+        FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
+
+@blueprint.route('/globinfobyadd', methods=['GET'])
+@login_required
+def globinfobyadd():
+    form = Input_form()
+    form2 = Input_form()
+    var = Stat_Address(dfauth)
+    return render_template('goodtraf/globinfobyadd.html', form=form, form2=form2, var=var)
 
 @blueprint.route('/plot.png')
 @login_required
@@ -110,6 +178,23 @@ def vizdata():
             return render_template('stats/vizdata.html', segment=var, form=form)
 
     return render_template('stats/vizdata.html', segment=var, form=form)
+
+@blueprint.route('/vizglobdata', methods=['GET','POST'])
+@login_required
+def vizglobdata():
+    form = Input_form()
+    obj = datainfo(tot)
+    var = obj.showData()
+    if form.validate_on_submit():
+        inputd = form.value.data
+        line = 0
+        if int(inputd) != 0:
+            line = int(inputd)
+            obj = datainfo(df,line)
+            var = obj.showData()
+            return render_template('goodtraf/vizglobdata.html', segment=var, form=form)
+
+    return render_template('goodtraf/vizglobdata.html', segment=var, form=form)
 
 @blueprint.route('/genstat')
 @login_required
